@@ -1,0 +1,4 @@
+```sh
+& go build
+& ./rest
+```
