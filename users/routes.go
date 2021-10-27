@@ -17,6 +17,12 @@ func RegisterRoutes(rg *gin.RouterGroup) {
 	r.DELETE("/:id", UserDelete)
 }
 
+// @Schemes
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Success 200 {array} UserResponse
+// @Router /users [get]
 func UserList(c *gin.Context) {
 	u, err := FindAll(nil)
 
@@ -29,6 +35,13 @@ func UserList(c *gin.Context) {
 	c.JSON(http.StatusOK, serializer.Response())
 }
 
+// @Schemes
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param   id     path    int     true        "ID"
+// @Success 200 {object} UserResponse
+// @Router /users/{id} [get]
 func UserRetrieve(c *gin.Context) {
 	id := c.Param("id")
 	u, err := FindOne(id)
@@ -42,6 +55,13 @@ func UserRetrieve(c *gin.Context) {
 	c.JSON(http.StatusOK, serializer.Response())
 }
 
+// @Schemes
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param   data     body    CreateUserDto     true        "User data"
+// @Success 201 {object} UserResponse
+// @Router /users [post]
 func UserCreate(c *gin.Context) {
 	var user UserModel
 	c.BindJSON(&user)
@@ -57,6 +77,14 @@ func UserCreate(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"user": serializer.Response()})
 }
 
+// @Schemes
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param   id     path    int     true        "ID"
+// @Param   data     body    UpdateUserDto     true        "User data"
+// @Success 200 {object} UserResponse
+// @Router /users/{id} [patch]
 func UserUpdate(c *gin.Context) {
 	id := c.Param("id")
 	userModel, err := FindOne(id)
@@ -77,6 +105,13 @@ func UserUpdate(c *gin.Context) {
 	c.JSON(http.StatusOK, serializer.Response())
 }
 
+// @Schemes
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param   id     path    int     true        "ID"
+// @Success 200 {object} UserResponse
+// @Router /users/{id} [delete]
 func UserDelete(c *gin.Context) {
 	id := c.Param("id")
 
